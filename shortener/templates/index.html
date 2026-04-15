@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Shortener</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-900 text-white">
+
+<!-- Navbar -->
+<div class="bg-gray-800 p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold">🚀 URL Shortener</h1>
+
+    <div class="space-x-4">
+        <a href="/" class="hover:text-blue-400">Home</a>
+        <a href="/dashboard/" class="hover:text-blue-400">Dashboard</a>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="flex items-center justify-center h-[80vh]">
+
+    <div class="bg-gray-800 p-8 rounded-2xl shadow-lg w-96">
+        <h2 class="text-2xl font-bold mb-4 text-center">🔗 Shorten URL</h2>
+
+        <input id="urlInput"
+               type="text"
+               placeholder="Enter your long URL..."
+               class="w-full p-3 rounded bg-gray-700 text-white mb-4">
+
+        <button onclick="shortenURL()"
+                class="w-full bg-blue-500 hover:bg-blue-600 p-3 rounded">
+            Shorten URL
+        </button>
+
+        <div id="result" class="mt-4 text-center"></div>
+    </div>
+
+</div>
+
+<script>
+async function shortenURL() {
+    const url = document.getElementById("urlInput").value;
+
+    const response = await fetch('/api/shorten/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ original_url: url })
+    });
+
+    const data = await response.json();
+
+    if (response.status === 429) {
+        document.getElementById("result").innerHTML =
+            `<p class="text-red-400">⚠️ Too many requests. Try later.</p>`;
+        return;
+    }
+
+    document.getElementById("result").innerHTML =
+        `<a href="${data.short_url}" target="_blank" class="text-green-400">
+            ${data.short_url}
+        </a>`;
+}
+</script>
+
+</body>
+</html>
