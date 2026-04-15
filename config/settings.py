@@ -84,11 +84,11 @@ DATABASES = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'url_shortner', #os.getenv('MYSQLDATABASE'),
-#         'USER': 'root', #os.getenv('MYSQLUSER'),
-#         'PASSWORD': 'omicron', #os.getenv('MYSQLPASSWORD'),
-#         'HOST': 'localhost',#os.getenv('MYSQLHOST'),
-#         'PORT': '3306', #os.getenv('MYSQLPORT'),
+#         'NAME': #os.getenv('MYSQLDATABASE'),
+#         'USER': #os.getenv('MYSQLUSER'),
+#         'PASSWORD': #os.getenv('MYSQLPASSWORD'),
+#         'HOST': #os.getenv('MYSQLHOST'),
+#         'PORT': #os.getenv('MYSQLPORT'),
 #         "OPTIONS": {
 #             "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
 #             "charset": "utf8mb4",
