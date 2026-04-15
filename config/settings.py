@@ -15,6 +15,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 import os
+import dj_database_url
 from dotenv import load_dotenv
 
 # Quick-start development settings - unsuitable for production
@@ -26,7 +27,7 @@ SECRET_KEY = 'django-insecure-1&mt13w^$4r*05gr87(%^)!g4y#+y8monvl92%-rifhgj6wwkv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -75,21 +76,26 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'url_shortner', #os.getenv('MYSQLDATABASE'),
-        'USER': 'root', #os.getenv('MYSQLUSER'),
-        'PASSWORD': 'omicron', #os.getenv('MYSQLPASSWORD'),
-        'HOST': 'localhost',#os.getenv('MYSQLHOST'),
-        'PORT': '3306', #os.getenv('MYSQLPORT'),
-        "OPTIONS": {
-            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
-            "charset": "utf8mb4",
-        },
-        "CONN_MAX_AGE": 100,
-    }
+    'default': dj_database_url.config(default='sqlite:///db.sqlite3')
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'url_shortner', #os.getenv('MYSQLDATABASE'),
+#         'USER': 'root', #os.getenv('MYSQLUSER'),
+#         'PASSWORD': 'omicron', #os.getenv('MYSQLPASSWORD'),
+#         'HOST': 'localhost',#os.getenv('MYSQLHOST'),
+#         'PORT': '3306', #os.getenv('MYSQLPORT'),
+#         "OPTIONS": {
+#             "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
+#             "charset": "utf8mb4",
+#         },
+#         "CONN_MAX_AGE": 100,
+#     }
+# }
 
 REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_CLASSES': [
@@ -144,7 +150,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
